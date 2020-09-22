@@ -1,5 +1,10 @@
 gunicorn==19.9.0
 requests==2.20.0
-bokeh==1.4.0
-flask==1.1.1
-pip==20.0.2
+bokeh
+flask
+pandas
+bokeh
+dill
+jinja2
+pip
+simplejson
