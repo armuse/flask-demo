@@ -62,7 +62,8 @@ def bokehPlot():
 #    if request.form.get('adjusted close'):
 #        p.line(data['Date'], data['adjusted close'], legend_label = 'adjusted close', color = 'red')
 #    html = render_template('bokehPlot.html',)
-    return render_template('bokehPlot.html')
+    #return render_template('bokehPlot.html')
+    return address
 
 #open, close, adjusted close (high, low, volume)
 
