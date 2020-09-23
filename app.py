@@ -11,6 +11,8 @@ def index():
 def about():
   return render_template('about.html')
 
+open, close, adjusted close (high, low, volume)
+
 #@app.route('/bokeh')
 #def bokeh():
 #    fig = figure(plot_width=600, plot_height=600)
