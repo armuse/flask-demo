@@ -31,39 +31,39 @@ def bokehPlot():
     address = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize={outputsize}&apikey={apikey}'
     print(address)
     r = requests.get(address).json()
-#    dates =(r['Time Series (Daily)'])
+    dates =(r['Time Series (Daily)'])
 
-#    data = pd.DataFrame.from_dict(dates)
-#    result = data.T
-    #result['Date'] = result.index.values.tolist()
-#    result = result.reset_index()
-#    result.columns = ['Date','open','high','low','close','adjusted close',\
-#        'volume','divident amount','split coefficient']
-#    result['Date'] = pd.to_datetime(result['Date'],format = '%Y-%m-%d')
+    data = pd.DataFrame.from_dict(dates)
+    result = data.T
+    result['Date'] = result.index.values.tolist()
+    result = result.reset_index()
+    result.columns = ['Date','open','high','low','close','adjusted close',\
+        'volume','divident amount','split coefficient']
+    result['Date'] = pd.to_datetime(result['Date'],format = '%Y-%m-%d')
     #print(result)
 #    x = data['Date']
 #    y0 = data['open']
 #    y1 = data['close']
 #    y2 = data['adjusted close']
 
-#    data['high'] = pd.to_numeric(data.high)
-#    maxY = data['high'].max()
-#    data['low'] = pd.to_numeric(data.low)
-#    minY = data['low'].min()
+    data['high'] = pd.to_numeric(data.high)
+    maxY = data['high'].max()
+    data['low'] = pd.to_numeric(data.low)
+    minY = data['low'].min()
 
-#    p = figure(tools = 'pan,box_zoom,reset,save', \
-#        y_axis_label = 'price (USD)', title = 'Stocks', \
-#        x_axis_label = 'Date', x_axis_type='datetime', \
-#        y_range = [minY, maxY])
-#    if request.form.get('open'):
-#        p.line(data['Date'], data['open'], legend_label = 'open')
+    p = figure(tools = 'pan,box_zoom,reset,save', \
+        y_axis_label = 'price (USD)', title = 'Stocks', \
+        x_axis_label = 'Date', x_axis_type='datetime', \
+        y_range = [minY, maxY])
+    if request.form.get('open'):
+        p.line(data['Date'], data['open'], legend_label = 'open')
 #    if request.form.get('close'):
 #        p.line(data['Date'], data['close'], legend_label = 'close', color = 'firebrick')
 #    if request.form.get('adjusted close'):
 #        p.line(data['Date'], data['adjusted close'], legend_label = 'adjusted close', color = 'red')
 #    html = render_template('bokehPlot.html',)
-    #return render_template('bokehPlot.html')
-    return address
+    return render_template('bokehPlot.html')
+    #return address
 
 #open, close, adjusted close (high, low, volume)
 
