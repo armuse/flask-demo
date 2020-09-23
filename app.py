@@ -25,12 +25,11 @@ def about():
 def bokehPlot():
     # get data
     function = 'TIME_SERIES_DAILY_ADJUSTED'
-    app.vars['symbol'] = request.form['symbol']
-    symbol = app.vars['symbol']
+    symbol = request.form['symbol']
     outputsize = 'compact'
     apikey = 'Q4Q8JUAPXYPNCYOF'
     address = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize={outputsize}&apikey={apikey}'
-
+    print(address)
     r = requests.get(address).json()
 #    dates =(r['Time Series (Daily)'])
 
