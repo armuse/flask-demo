@@ -31,9 +31,9 @@ def bokehPlot():
     address = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize={outputsize}&apikey={apikey}'
     print(address)
     r = requests.get(address).json()
-    dates =(r['Time Series (Daily)']) #why is this failing?
+    #dates =(r['Time Series (Daily)']) #why is this failing?
 
-    data = pd.DataFrame.from_dict(dates)
+    data = pd.DataFrame.from_dict(r['Time Series (Daily)'])
     result = data.T
     result['Date'] = result.index.values.tolist()
     result = result.reset_index()
