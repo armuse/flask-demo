@@ -16,13 +16,11 @@ def getData():
     outputsize = 'compact'
     apikey = 'Q4Q8JUAPXYPNCYOF'
     address = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize={outputsize}&apikey={apikey}'
-
     r = requests.get(address).json()
     dates =(r['Time Series (Daily)'])
-
+    print(address)
     data = pd.DataFrame.from_dict(dates)
     result = data.T
-    #result['Date'] = result.index.values.tolist()
     result = result.reset_index()
     result.columns = ['Date','open','high','low','close','adjusted close',\
         'volume','divident amount','split coefficient']
@@ -65,7 +63,7 @@ def plotData(data):
 
 def main():
     data = getData()
-#    plotData(data)
+    #plotData(data)
     #pushToApp()
 
 if __name__=="__main__":
