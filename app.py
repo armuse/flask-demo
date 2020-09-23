@@ -31,7 +31,7 @@ def bokehPlot():
     address = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize={outputsize}&apikey={apikey}'
     print(address)
     r = requests.get(address).json()
-    dates =(r['Time Series (Daily)'])
+    dates =(r['Time Series (Daily)']) #why is this failing?
 
     data = pd.DataFrame.from_dict(dates)
     result = data.T
@@ -62,8 +62,8 @@ def bokehPlot():
 #    if request.form.get('adjusted close'):
 #        p.line(data['Date'], data['adjusted close'], legend_label = 'adjusted close', color = 'red')
 #    html = render_template('bokehPlot.html',)
-    return render_template('bokehPlot.html')
-    #return address
+    #return render_template('bokehPlot.html')
+    return address
 
 #open, close, adjusted close (high, low, volume)
 
