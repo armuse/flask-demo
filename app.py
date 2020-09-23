@@ -5,7 +5,7 @@ import pandas as pd
 from bokeh.io import curdoc
 from bokeh.plotting import figure, output_file, show
 from bokeh.resources import CDN
-from bokeh.embed import file_html
+from bokeh.embed import file_html, components
 
 app = Flask(__name__)
 
@@ -29,7 +29,6 @@ def bokehPlot():
     outputsize = 'compact'
     apikey = 'Q4Q8JUAPXYPNCYOF'
     address = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize={outputsize}&apikey={apikey}'
-    print(address)
     r = requests.get(address).json()
     dates =(r['Time Series (Daily)']) #why is this failing?
     #pd.DataFrame.from_dict(r['Time Series (Daily)'], orient= 'index').sort_index(axis=1)
@@ -37,50 +36,26 @@ def bokehPlot():
     result = data.T
     result['Date'] = result.index.values.tolist()
     result = result.reset_index()
-    result.columns = ['Date','open','high','low','close','adjusted close',\
-        'volume','divident amount','split coefficient']
+    #print(list(result.columns))
+    result.columns = ['index', 'open', 'high', 'low', 'close', 'adjusted close', 'volume', 'dividend amount', 'split coefficient', 'Date']
+    #result.columns = ['Date','open','high','low','close','adjusted close','volume','divident amount','split coefficient']
     result['Date'] = pd.to_datetime(result['Date'],format = '%Y-%m-%d')
-    #print(result)
-#    x = data['Date']
-#    y0 = data['open']
-#    y1 = data['close']
-#    y2 = data['adjusted close']
-
-    data['high'] = pd.to_numeric(data.high)
-    maxY = data['high'].max()
-    data['low'] = pd.to_numeric(data.low)
-    minY = data['low'].min()
 
     p = figure(tools = 'pan,box_zoom,reset,save', \
-        y_axis_label = 'price (USD)', title = 'Stocks', \
-        x_axis_label = 'Date', x_axis_type='datetime', \
-        y_range = [minY, maxY])
+        y_axis_label = 'price (USD)', title = symbol, \
+        x_axis_label = 'Date', x_axis_type='datetime',)
+    #    y_range = [minY, maxY])
     if request.form.get('open'):
-        p.line(data['Date'], data['open'], legend_label = 'open')
-#    if request.form.get('close'):
-#        p.line(data['Date'], data['close'], legend_label = 'close', color = 'firebrick')
-#    if request.form.get('adjusted close'):
-#        p.line(data['Date'], data['adjusted close'], legend_label = 'adjusted close', color = 'red')
-#    html = render_template('bokehPlot.html',)
-    #return render_template('bokehPlot.html')
-    return address
+        p.line(result['Date'], result['open'], legend_label = 'open')
+    if request.form.get('close'):
+        p.line(result['Date'], result['close'], legend_label = 'close', color = 'firebrick')
+    if request.form.get('adjusted close'):
+        p.line(result['Date'], result['adjusted close'], legend_label = 'adjusted close', color = 'red')
 
-#open, close, adjusted close (high, low, volume)
+    script, div = components(p)
 
-#@app.route('/bokeh')
-#def bokeh():
-#    fig = figure(plot_width=600, plot_height=600)
-#    fig.vbar(x=[1, 2, 3, 4],width=0.5,bottom=0,top=[1.7, 2.2, 4.6, 3.9])
-#    js_resources = INLINE.render_js()
-#    css_resources = INLINE.render_css()
-#    script, div = components(fig)
-#    html = render_template(
-#        'index.html',
-#        plot_script=script,
-#        plot_div=div,
-#        js_resources=js_resources,
-#        css_resources=css_resources,)
-#    return encode_utf8(html)
+    return render_template('bokehPlot.html', script=script, div=div)
+
 
 if __name__ == '__main__':
   app.run(port=33507)

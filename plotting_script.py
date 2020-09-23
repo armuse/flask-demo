@@ -22,6 +22,7 @@ def getData():
     data = pd.DataFrame.from_dict(dates)
     result = data.T
     result = result.reset_index()
+    print(list(result.columns))
     result.columns = ['Date','open','high','low','close','adjusted close',\
         'volume','divident amount','split coefficient']
     result['Date'] = pd.to_datetime(result['Date'],format = '%Y-%m-%d')
