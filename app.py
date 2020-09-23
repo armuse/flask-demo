@@ -31,10 +31,10 @@ def bokehPlot():
     address = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize={outputsize}&apikey={apikey}'
     print(address)
     r = requests.get(address).json()
-    #dates =(r['Time Series (Daily)']) #why is this failing?
-    pd.DataFrame.from_dict(r['Time Series (Daily)'], orient= 'index').sort_index(axis=1)
-    #data = pd.DataFrame.from_dict(r['Time Series (Daily)'])
-    #result = data.T
+    dates =(r['Time Series (Daily)']) #why is this failing?
+    #pd.DataFrame.from_dict(r['Time Series (Daily)'], orient= 'index').sort_index(axis=1)
+    data = pd.DataFrame.from_dict(r['Time Series (Daily)'])
+    result = data.T
     result['Date'] = result.index.values.tolist()
     result = result.reset_index()
     result.columns = ['Date','open','high','low','close','adjusted close',\
