@@ -11,7 +11,7 @@ def index():
 def about():
   return render_template('about.html')
 
-open, close, adjusted close (high, low, volume)
+#open, close, adjusted close (high, low, volume)
 
 #@app.route('/bokeh')
 #def bokeh():
